@@ -25,7 +25,7 @@ function ResetPassword() {
   return (
     <BaseLayout>
     <div className=" p-3 border shadow rounded admin-form">
-          <h1 className="text-center p-2">Login</h1>
+          <h1 className="text-center p-2">Reset Password</h1>
     <Form onSubmit={handleSubmit}>
 {inputs.map((input) => {
               return (

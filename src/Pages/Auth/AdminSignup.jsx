@@ -11,8 +11,8 @@ import { Link, useNavigate } from "react-router-dom";
 const inputs = [
   { name: "fName", label: "First Name", placeholder: "Enter First Name", required:true },
   { name: "lname", label: "Last Name", placeholder: "Enter Last Name", required:true },
-  { name: "Phone", label: "Phone", placeholder: "Enter Phone",required:true},
-  {name:"email", label:"Email", placeholder:"abc@gmail.com", required:true},
+  { name: "Phone", label: "Phone", placeholder: "Enter Phone", type:'phone', required:true},
+  {name:"email", label:"Email", placeholder:"abc@gmail.com", type:"email", required:true},
   {name:"password", label:"Password", placeholder:"********" , type:"password", required:true, minLength:6},
   {name:"confirmPassword", label:"Confirm Password", placeholder:"********" , type:"password", required:true}
 ];
