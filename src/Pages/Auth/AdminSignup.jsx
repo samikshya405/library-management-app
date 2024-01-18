@@ -20,23 +20,21 @@ function AdminSignup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({})
  
-const handleChnage=()=>{
+const handleChnage=(e)=>{
   const {name, value} =e.target;
     setFormData({...formData, [name]:value})
 }
   const handleSubmit = (e) => {
     e.preventDefault()
-    toast.success('Your Account has been created', {
-      position: 'top-right', 
-      autoClose: 2000, 
-      hideProgressBar: true, 
-      closeOnClick: true,
-      pauseOnHover: true, 
-      draggable: true,
-    });
-  
+    const {password, confirmPassword} = formData
+    if(password!==confirmPassword){
+      return toast.error("password didnot match")
+    }
+    toast.success("Admin form data submitted")
+
+
+
     
-      navigate('/')
     
     
   };
@@ -54,7 +52,7 @@ const handleChnage=()=>{
                   key={input.name}
                   label={input.label}
                   {...input}
-                  onchange={handleChnage}
+                  onChange={handleChnage}
                   
                 />
               );
