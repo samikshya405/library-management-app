@@ -1,5 +1,6 @@
-import React from 'react'
-import BaseLayout from '../../Component/Layout/BaseLayout'
+import React from "react";
+import BaseLayout from "../../Component/Layout/BaseLayout";
+import AdminLayout from "../../Component/Layout/AdminLayout";
 // import { useLocation } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
 
@@ -9,13 +10,9 @@ function DashBoard() {
   // const username = location?.state?.username || "Guest";
   return (
     <>
-    
-    <BaseLayout>
-    hello, !
-    
-    </BaseLayout>
+      <AdminLayout>DashBoard component</AdminLayout>
     </>
-  )
+  );
 }
 
-export default DashBoard
+export default DashBoard;
