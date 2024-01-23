@@ -5,10 +5,12 @@ import { Button, Form } from "react-bootstrap";
 import CustomInput from "../../Component/CustomInput";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase-config";
+import { auth, firestore } from "../../firebase-config";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../redux/auth/authSlice";
+import { doc, getDoc } from "firebase/firestore";
+import { getUserInfoAction } from "../../redux/auth/authAction";
 
 const inputs = [
   {
@@ -47,12 +49,11 @@ function Login() {
         password
       );
       const user = userCredential.user;
-      const userEmail = user.email;
+      //get the user information from database
+      dispatch(getUserInfoAction(user.uid))
+      toast("logged in")
      
-      dispatch(setUserInfo(userCredential.user))
-
-      // Navigate to the desired page after successful login
-      // navigate('/dashboard', { state: { username: userEmail } });
+    
     } catch (error) {
       const errorCode = error.code;
       if (errorCode.includes("auth/user-not-found") || errorCode.includes("auth/wrong-password")) {
