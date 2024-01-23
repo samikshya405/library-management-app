@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminSignup from "./AdminSignup";
 import BaseLayout from "../../Component/Layout/BaseLayout";
 import { Button, Form } from "react-bootstrap";
 import CustomInput from "../../Component/CustomInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase-config";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "../../redux/auth/authSlice";
 
 const inputs = [
   {
@@ -23,16 +28,48 @@ const inputs = [
 ];
 function Login() {
   const [formData, setFormData] = useState({})
- 
+  const navigate = useNavigate();
+  const dispatch =useDispatch()
+  const {userInfo}= useSelector((state)=>state.auth)
+  // const [username, setUsername] = useState(""); 
   const handleChnage=(e)=>{
     const {name, value} =e.target;
       setFormData({...formData, [name]:value})
   }
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
     e.preventDefault()
-    toast.success('logged in')
+    const { email, password } = formData;
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      const userEmail = user.email;
+     
+      dispatch(setUserInfo(userCredential.user))
+
+      // Navigate to the desired page after successful login
+      // navigate('/dashboard', { state: { username: userEmail } });
+    } catch (error) {
+      const errorCode = error.code;
+      if (errorCode.includes("auth/user-not-found") || errorCode.includes("auth/wrong-password")) {
+        toast.error("Invalid email or password");
+      } else {
+        toast.error("Invalid email or password");
+        console.log(error.message);
+      }
+    }
 
   }
+  useEffect(()=>{
+    if(userInfo.uid){
+      navigate('/dashboard')
+    }
+
+  },[userInfo])
   return (
     
     <>
